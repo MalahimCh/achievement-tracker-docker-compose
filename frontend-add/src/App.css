@@ -1,0 +1,281 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Public+Sans:wght@400;500;600;700&display=swap');
+
+:root{
+  --paper: #FAF7F1;
+  --paper-dark: #F2EDE2;
+  --ink: #24312B;
+  --ink-soft: #5B6B62;
+  --emerald: #1F6F54;
+  --emerald-dark: #16523E;
+  --gold: #C89B3C;
+  --gold-soft: #E7D4A3;
+  --rule: #E1D9C7;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  background: var(--paper-dark);
+  font-family:'Public Sans', "Segoe UI", sans-serif;
+  color: var(--ink);
+}
+
+.page{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  padding:70px 20px;
+}
+
+/* --- Bound ledger container --- */
+.container{
+  position:relative;
+  width:820px;
+  max-width:100%;
+  background: var(--paper);
+  padding:56px 56px 56px 72px;
+  border-radius:6px;
+  box-shadow:
+    0 1px 2px rgba(36,49,43,.06),
+    0 24px 48px -20px rgba(36,49,43,.25);
+}
+
+/* the spine */
+.container::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:26px;
+  background: var(--emerald-dark);
+  border-radius:6px 0 0 6px;
+}
+
+/* brass rivets on the spine */
+.container::after{
+  content:"";
+  position:absolute;
+  left:12px;
+  top:48px;
+  bottom:48px;
+  width:2px;
+  background-image: radial-gradient(circle, var(--gold) 2.5px, transparent 2.6px);
+  background-size: 100% 64px;
+  background-repeat: repeat-y;
+  opacity:.85;
+}
+
+h1{
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  font-size:42px;
+  letter-spacing:-.01em;
+  color: var(--ink);
+}
+
+.subtitle{
+  margin-top:8px;
+  margin-bottom:38px;
+  color: var(--ink-soft);
+  font-size:16px;
+  font-style:italic;
+  font-family:'Fraunces', serif;
+}
+
+/* --- Entry input row --- */
+.inputRow{
+  display:flex;
+  gap:14px;
+  padding-bottom:28px;
+  border-bottom:1px dashed var(--rule);
+}
+
+input{
+  flex:1;
+  padding:16px 18px;
+  border:1px solid var(--rule);
+  background: #FEFDFB;
+  border-radius:8px;
+  font-family:'Public Sans', sans-serif;
+  font-size:16px;
+  color: var(--ink);
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+input::placeholder{
+  color:#9AA69D;
+}
+
+input:focus{
+  outline:none;
+  border-color: var(--emerald);
+  box-shadow: 0 0 0 3px rgba(31,111,84,.12);
+}
+
+button{
+  cursor:pointer;
+  border:none;
+  font-family:'Public Sans', sans-serif;
+  font-weight:600;
+  transition: background .2s ease, transform .15s ease;
+}
+
+.saveBtn{
+  background: var(--emerald);
+  color:#FBF9F4;
+  padding:0 30px;
+  border-radius:8px;
+  font-size:15px;
+  letter-spacing:.01em;
+}
+
+.saveBtn:hover{
+  background: var(--emerald-dark);
+}
+
+.saveBtn:active{
+  transform: scale(.97);
+}
+
+/* --- Success note, stamped in gold --- */
+.success{
+  margin-top:16px;
+  color: var(--emerald-dark);
+  font-weight:600;
+  font-size:14px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  animation: stamp-in .25s ease;
+}
+
+.success::before{
+  content:"";
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background: var(--gold);
+  flex-shrink:0;
+}
+
+@keyframes stamp-in{
+  from{ opacity:0; transform: scale(.85); }
+  to{ opacity:1; transform: scale(1); }
+}
+
+/* --- Toggle tab --- */
+.toggleBtn{
+  margin-top:32px;
+  width:100%;
+  padding:14px;
+  background: transparent;
+  border:1px solid var(--rule);
+  border-radius:8px;
+  color: var(--emerald-dark);
+  font-size:14px;
+  letter-spacing:.02em;
+}
+
+.toggleBtn:hover{
+  background: var(--gold-soft);
+  border-color: var(--gold);
+}
+
+/* --- Ledger entries --- */
+.list{
+  margin-top:28px;
+  counter-reset: entry;
+}
+
+.card{
+  counter-increment: entry;
+  position:relative;
+  background: #FEFDFB;
+  border:1px solid var(--rule);
+  border-radius:8px;
+  padding:20px 24px 20px 60px;
+  margin-bottom:14px;
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+
+.card:hover{
+  transform: translateX(2px);
+  box-shadow: 0 8px 20px -8px rgba(36,49,43,.18);
+}
+
+/* ledger entry number */
+.card::before{
+  content: counter(entry, decimal-leading-zero);
+  position:absolute;
+  left:20px;
+  top:50%;
+  transform: translateY(-50%);
+  font-family:'Fraunces', serif;
+  font-size:13px;
+  color: var(--ink-soft);
+}
+
+/* wax-seal checkmark */
+.card::after{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:4px;
+  background: var(--emerald);
+  border-radius:8px 0 0 8px;
+}
+
+.cardTitle{
+  font-family:'Fraunces', serif;
+  font-size:19px;
+  font-weight:500;
+  color: var(--ink);
+}
+
+.cardDate{
+  margin-top:6px;
+  color: var(--ink-soft);
+  font-size:13px;
+  letter-spacing:.02em;
+  text-transform:uppercase;
+}
+
+/* --- Empty page --- */
+.empty{
+  text-align:center;
+  padding:56px 30px;
+  border:1.5px dashed var(--rule);
+  border-radius:8px;
+  color: var(--ink-soft);
+}
+
+.empty h3{
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  color: var(--ink);
+  margin-bottom:8px;
+  font-size:20px;
+}
+
+@media(max-width:700px){
+  .container{
+    width:100%;
+    padding:36px 28px 36px 44px;
+  }
+  .container::before{ width:18px; }
+  .container::after{ left:8px; }
+  .inputRow{
+    flex-direction:column;
+  }
+  .saveBtn{
+    height:52px;
+  }
+  h1{ font-size:32px; }
+}
